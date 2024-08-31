@@ -60,7 +60,7 @@ ButtonCorner.Parent = AdminButton
 
 
 -- Create the Admin button
-local playerButton = Instance.new("TextButton")
+local PlayerButton = Instance.new("TextButton")
 PlayerButton.Size = UDim2.new(1, -20, 0, 50) -- Full width of the sidebar minus padding, height of 60px
 PlayerButton.Position = UDim2.new(0, 10, 0, 120) -- Positioned 10 pixels down from the top of the sidebar
 PlayerButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70) -- Slightly darker button background
