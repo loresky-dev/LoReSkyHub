@@ -105,6 +105,28 @@ InfiniteYieldButtonCorner.CornerRadius = UDim.new(0, 10)
 InfiniteYieldButtonCorner.Parent = InfiniteYieldButton
 
 -- Define the loadInfiniteYield function
+local function loadInfiniteYield()
+wait(0.2)
+local function callback(text)
+    if text == "Yes" then
+	print("User said yes")
+    elseif text == "No" then
+	print("User said no")
+    end
+end
+ 
+local bindableFunction= Instance.new("BindableFunction")
+ 
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Loaded!";
+    Text = "Infinite Yield ready!";
+    Duration = "2";
+    callbakc = bindableFunction;
+    Button1 = "OK";
+ 
+})
+ 
+wait(3.5)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
 end
 
