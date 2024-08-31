@@ -58,6 +58,24 @@ local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 10) -- Rounded corners with a radius of 10
 ButtonCorner.Parent = AdminButton
 
+
+-- Create the Admin button
+local playerButton = Instance.new("TextButton")
+PlayerButton.Size = UDim2.new(1, -20, 0, 50) -- Full width of the sidebar minus padding, height of 60px
+PlayerButton.Position = UDim2.new(0, 10, 0, 120) -- Positioned 10 pixels down from the top of the sidebar
+PlayerButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70) -- Slightly darker button background
+PlayerButton.BorderSizePixel = 0
+PlayerButton.Text = "Player"
+PlayerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayerButton.TextScaled = true
+PlayerButton.Font = Enum.Font.SourceSansBold
+PlayerButton.Parent = Sidebar
+
+-- Add rounded corners to the Admin button
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 10) -- Rounded corners with a radius of 10
+ButtonCorner.Parent = AdminButton
+
 -- Create the text label
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Size = UDim2.new(1, 0, 0, 50)
