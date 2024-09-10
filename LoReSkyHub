@@ -1,15 +1,19 @@
 local Key = "LoReSkyhubFF33AA"
+
 toclipboard("https://link-hub.net/1230789/loreskyhublink")
+
 local StarterGui = game:GetService("StarterGui")
 local  KeySystem = Instance.new("ScreenGui")
  KeySystem.Name = "LoReSkyKey"
- KeySystem.Parent = StarterGui
+KeySystem.Parent = game.CoreGui
+
 local Frame = Instance.new("Frame")
 Frame.Parent =  KeySystem
 Frame.Name = "Frame"
 Frame.Size = UDim2.new(0.3, 0, 0.1, 0.)
 Frame.Position = UDim2.new(0.35, 0, 0.45, 0.)
 Frame.BackgroundColor3 = Color3.fromRGB(84, 84, 84)
+
 local UIcorner = Instance.new("UICorner")
 UIcorner.Name = "UIcorner"
 UIcorner.Parent = Frame
@@ -19,6 +23,7 @@ UIStroke.Name = "UIStroke"
 UIStroke.Parent = Frame
 UIStroke.Thickness = 10
 UIStroke.Color = Color3.new(0.203922, 0.203922, 0.203922)
+
 local Textbox2 = Instance.new("TextBox")
 Textbox2.Name = "Textbox2"
 Textbox2.Parent =  KeySystem
@@ -32,6 +37,7 @@ Textbox2.TextStrokeTransparency = 0
 Textbox2.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 Textbox2.Text = "Type your key here!"
 Textbox2.ZIndex = 10
+
 local TextButton = Instance.new("TextButton")
 TextButton.Name = "TextButton"
 TextButton.Parent =  KeySystem
@@ -56,10 +62,12 @@ Frame2.Size = UDim2.new(0.22, 0, 0.13, 0.)
 Frame2.Position = UDim2.new(0.39, 0, 0.57, 0.)
 Frame2.ZIndex = 8
 Frame2.BackgroundColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+
 local UIcorner3 = Instance.new("UICorner")
 UIcorner3.Name = "UIcorner2"
 UIcorner3.Parent = Frame2
 UIcorner3.CornerRadius = UDim.new(10, 0.)
+
 local TextNote = Instance.new("TextLabel")
 TextNote.Name = "TextNote"
 TextNote.Parent =  KeySystem
@@ -69,6 +77,7 @@ TextNote.TextStrokeTransparency = 0
 TextNote.Position = UDim2.new(0.4, 0, 0.7, 0.)
 TextNote.Size = UDim2.new(0.2, 0, 0.1, 0.)
 TextNote.BackgroundTransparency = 1
+
 local Frame3 = Instance.new("Frame")
 Frame3.Name = "Frame3"
 Frame3.Size = UDim2.new(0.4, 0, 0.7, 0.)
@@ -76,11 +85,13 @@ Frame3.Position = UDim2.new(0.3, 0, 0.2, 0.)
 Frame3.Parent =  KeySystem
 Frame3.ZIndex = -3
 Frame3.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
+
 local UIstroke5 = Instance.new("UIStroke")
 UIstroke5.Name = "	UISTROKE5"
 UIstroke5.Parent = Frame3
 UIstroke5.Color = Color3.new(0.203922, 0.203922, 0.203922)
 UIstroke5.Thickness = 10
+
 local Title = Instance.new("TextLabel")
 Title.Name = "Title"
 Title.Parent =  KeySystem
@@ -91,3 +102,9 @@ Title.Size = UDim2.new(0.5, 0, 0.5, 0.)
 Title.BackgroundTransparency = 1
 Title.TextSize =  36
 Title.Position = UDim2.new(0.25, 0, 0.05, 0.)
+
+local scriptload = Instance.new("Sound")
+scriptload.Parent = game:GetService("SoundService")
+scriptload.Name = "Sound"
+scriptload.SoundId = "rbxassetid://9120129807"
+scriptload:Play()
