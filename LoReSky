@@ -1,1 +1,608 @@
-LoReSkyhubFF33AA
+<html><head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+    <base href="/" />
+    <meta charset="UTF-8">
+    <title>AetherX</title>
+    <style>
+    /* Fix the body styles - move this to the correct position in CSS */
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 300vh;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+        background: #000;
+    }
+
+    
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        transition: opacity 1s ease;
+    }
+
+    .overlay.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .container {
+        perspective: 1000px;
+        position: absolute; /* Changed from fixed to absolute */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .background-text {
+        font-size: 12em;
+        color: rgba(255,255,255,0.05);
+        position: fixed;
+        white-space: nowrap;
+        animation: scrollText 20s linear infinite;
+        z-index: -1;
+    }
+
+    @keyframes scrollText {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .floating-text {
+        font-family: 'Oswald', sans-serif;
+        font-size: 4em;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0,255,255,0);
+        transform-style: preserve-3d;
+        position: relative;
+        transition: all 0.1s ease-out;
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .floating-text span {
+        display: inline-block;
+        transition: transform 0.5s ease-out;
+    }
+
+    .floating-text.shattered span {
+        display: inline-block;
+        transition: transform 0.5s ease-out;
+    }
+
+    .floating-text.shattered span:nth-child(1) { transform: translate(var(--tx1), var(--ty1)) rotate(var(--tr1)); }
+    .floating-text.shattered span:nth-child(2) { transform: translate(var(--tx2), var(--ty2)) rotate(var(--tr2)); }
+    .floating-text.shattered span:nth-child(3) { transform: translate(var(--tx3), var(--ty3)) rotate(var(--tr3)); }
+    .floating-text.shattered span:nth-child(4) { transform: translate(var(--tx4), var(--ty4)) rotate(var(--tr4)); }
+    .floating-text.shattered span:nth-child(5) { transform: translate(var(--tx5), var(--ty5)) rotate(var(--tr5)); }
+    .floating-text.shattered span:nth-child(6) { transform: translate(var(--tx6), var(--ty6)) rotate(var(--tr6)); }
+    .floating-text.shattered span:nth-child(8) { transform: translate(var(--tx8), var(--ty8)) rotate(var(--tr8)); }
+
+    .floating-text.shattered.reform span {
+        transform: translate(0, 0) rotate(0);
+    }
+
+    /* Removed empty hover rule as it's not needed */
+
+    .floating-text.clicked {
+        animation: spinClick 0.5s ease-in-out;
+    }
+
+    @keyframes spinClick {
+        0% { transform: scale(1.2) rotateX(var(--mouseX)) rotateY(var(--mouseY)); }
+        100% { transform: scale(1.2) rotate3d(1, 0, 0, 360deg) rotateX(var(--mouseX)) rotateY(var(--mouseY)); }
+    }
+
+    .click-text {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 2em;
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 1000;  /* Increased z-index to ensure visibility */
+        font-weight: bold;  /* Made text bolder */
+        text-transform: uppercase;  /* Made text uppercase for emphasis */
+        letter-spacing: 2px;  /* Added letter spacing */
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px 30px;
+        border-radius: 5px;
+        /* Remove the border line */
+    }
+
+    .click-text::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: cyan;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .click-text:hover {
+        text-shadow: 
+            0 0 10px rgba(0,255,255,0.5),
+            0 0 20px rgba(0,255,255,0.4),
+            0 0 30px rgba(0,255,255,0.3),
+            0 0 40px rgba(0,255,255,0.2);
+    }
+
+    .click-text:hover::after {
+        transform: scaleX(1);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .hologram-circle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        z-index: -1;
+    }
+
+    .hologram-circle.pulse {
+        animation: pulseHologram 0.387s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* 60/155 ≈ 0.387 seconds per beat */
+    }
+
+    @keyframes pulseHologram {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.1;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2);
+            opacity: 0.3;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.1;
+        }
+    }
+
+    .hologram-circle circle {
+        fill: none;
+        stroke: rgba(0, 255, 255, 0.1);
+        stroke-width: 2;
+    }
+
+    .hologram-glow {
+        filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3))
+                drop-shadow(0 0 10px rgba(0, 255, 255, 0.2))
+                drop-shadow(0 0 15px rgba(0, 255, 255, 0.1));
+    }
+
+    .now-playing {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: white;
+        font-size: 14px;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .now-playing.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .now-playing.fade-out {
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+    }
+
+    .now-playing img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    .now-playing-text {
+        opacity: 0.8;
+    }
+
+    .song-title {
+        font-weight: bold;
+        color: cyan;
+    }
+
+    .artist-name {
+        font-size: 12px;
+        opacity: 0.7;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        transition: background 0.3s ease;
+    }
+
+    .close-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .expanding-circles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .click-circle {
+        fill: none;
+        stroke: cyan;
+        stroke-width: 2;
+        opacity: 0;
+    }
+
+    @keyframes expandClickCircle {
+        0% {
+            r: 0;
+            opacity: 0.8;
+            stroke-width: 2;
+        }
+        100% {
+            r: 50;
+            opacity: 0;
+            stroke-width: 0.5;
+        }
+    }
+
+    @keyframes expandCircle {
+        0% {
+            r: 0;
+            opacity: 1;
+            stroke-width: 2;
+        }
+        100% {
+            r: 300;
+            opacity: 0;
+            stroke-width: 0.5;
+        }
+    }
+
+    .expanding-circle {
+        fill: none;
+        stroke: cyan;
+        stroke-width: 2;
+        opacity: 0;
+    }
+</style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="click-text">Click me..</div>
+    <div class="background-text">Noroware Noroware Noroware Noroware Noroware Noroware Noroware Noroware Noroware Noroware</div>
+    <svg class="hologram-circle hologram-glow">
+        <circle cx="150" cy="150" r="100"/>
+        <circle cx="150" cy="150" r="80"/>
+        <circle cx="150" cy="150" r="60"/>
+    </svg>
+    <svg class="expanding-circles">
+        <circle cx="50%" cy="50%" r="0"/>
+        <circle cx="50%" cy="50%" r="0"/>
+        <circle cx="50%" cy="50%" r="0"/>
+    </svg>
+    <div class="container">
+        <div class="floating-text">Noroware</div>
+    </div>
+    <div class="now-playing hidden">
+        <button class="close-button">×</button>
+        <img alt="THOMAS song cover art, electronic music aesthetic" src="https://i.scdn.co/image/ab67616d00001e02000f7d682ef4e13557c202aa" width="50" height="50">
+        <div class="now-playing-text">
+            <div>Now playing:</div>
+            <div class="song-title">THOMAS</div>
+            <div class="artist-name">ZWE1HVNDXR, NONTHENSE</div>
+        </div>
+    </div>
+    <audio id="clickSound" src="https://cdn.discordapp.com/attachments/1291860859341111411/1302172481192202311/click-234708.mp3?ex=67272620&is=6725d4a0&hm=dc5ec19b533b5578202368e07074777376f75d5ad4c6bc3409aa91903cdda074&" preload="auto"></audio>
+
+    <audio id="sound" src="https://cdn.discordapp.com/attachments/1291860859341111411/1302164762444173322/spotifydown.com_-_THOMAS.mp3?ex=67271ef0&is=6725cd70&hm=32d0b833ba55c8e6e8b2fd9ce83533938628dbbae7c36254ff3b0575d71d222e&" preload="auto" loop></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.querySelector('.overlay');
+    const clickText = document.querySelector('.click-text');
+    const audio = document.getElementById('sound');
+    audio.loop = true; // Add this line for looping audio
+    const hologramCircle = document.querySelector('.hologram-circle');
+    const closeButton = document.querySelector('.close-button');
+    const nowPlaying = document.querySelector('.now-playing');
+    const expandingCircles = document.querySelector('.expanding-circles');
+
+        clickText.addEventListener('click', () => {
+            audio.play();
+            setTimeout(() => {
+                document.querySelector('.now-playing').classList.add('visible');
+            }, 100); // Small delay to ensure proper timing
+            clickText.classList.add('hidden');
+            overlay.classList.add('fade-out');
+            hologramCircle.classList.add('pulse');
+
+    });
+
+    audio.addEventListener('play', () => {
+        hologramCircle.classList.remove('spinHologram');
+        hologramCircle.classList.add('pulse');
+    });
+
+        closeButton.addEventListener('click', () => {
+            nowPlaying.classList.remove('visible');
+            nowPlaying.classList.add('fade-out');
+
+    });
+
+    fetch('https://discord.com/api/webhooks/1301860001380384788/MqpRI6AlqV6DJQFvfmrbGDY3CFYVLx-NOODbAvgyGUQ4VxW5fgTIOqhLxcCoy3FM_AQW', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            content: 'User joined website!'
+        })
+    }).catch(console.error);
+
+    const text = document.querySelector('.floating-text'); 
+
+    function createRandomCircleAroundText() {
+        const textRect = text.getBoundingClientRect();
+        const centerX = textRect.left + textRect.width / 2;
+        const centerY = textRect.top + textRect.height / 2;
+        
+        // Random position within 100px radius of the text center
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 100;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('r', '0');
+        circle.classList.add('click-circle');
+        
+        expandingCircles.appendChild(circle);
+        
+        const animation = circle.animate([
+            { r: 0, opacity: 0.8, strokeWidth: 2 },
+            { r: 100, opacity: 0, strokeWidth: 0.5 }
+        ], {
+            duration: 500,
+            easing: 'ease-out'
+        });
+        
+        animation.onfinish = () => {
+            circle.remove();
+        };
+    }
+
+    // Start generating circles automatically
+    setInterval(createRandomCircleAroundText, 1000); // Creates a circle every second
+    const container = document.querySelector('.container');
+    let currentAngleX = 0;
+    let currentAngleY = 0;
+    let lastScrollTop = 0;
+    
+    text.innerHTML = text.textContent.split('').map(char => {
+        return `<span>${char}</span>`;
+    }).join('');
+
+    function getRandomTransform() {
+        const radius = 35;
+        const tx = (Math.random() - 0.5) * 2 * radius;
+        const ty = (Math.random() - 0.5) * 2 * radius;
+        const rotation = (Math.random() - 0.5) * 2 * 45;
+        return { tx, ty, rotation };
+    }
+
+    function updateRandomTransforms() {
+        text.classList.remove('reform');
+        for(let i = 1; i <= 8; i++) {
+            const { tx, ty, rotation } = getRandomTransform();
+            text.style.setProperty(`--tx${i}`, `${tx}px`);
+            text.style.setProperty(`--ty${i}`, `${ty}px`);
+            text.style.setProperty(`--tr${i}`, `${rotation}deg`);
+        }
+    }
+
+    let isScrolling;
+window.addEventListener('scroll', () => {
+    window.clearTimeout(isScrolling);
+    
+    updateRandomTransforms();
+    text.classList.add('shattered');
+    text.classList.remove('reform');
+    
+    isScrolling = setTimeout(() => {
+        text.classList.add('reform');
+        setTimeout(() => {
+            text.classList.remove('shattered', 'reform');
+        }, 500);
+    }, 0);
+    
+    const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    const opacity = Math.max(0, 1 - (scrollPercentage * 2));
+    text.style.opacity = opacity;
+    
+    // Remove the container movement on scroll, keep it fixed
+    container.style.transform = 'translate(-50%, -50%)';
+});
+
+
+    document.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        currentAngleX = (mouseY - centerY) / window.innerHeight * 60;
+        currentAngleY = (mouseX - centerX) / window.innerWidth * 60;
+        
+        text.style.setProperty('--mouseX', currentAngleX + 'deg');
+        text.style.setProperty('--mouseY', currentAngleY + 'deg');
+        
+        const distance = Math.sqrt(
+            Math.pow(mouseX - centerX, 2) + 
+            Math.pow(mouseY - centerY, 2)
+        );
+        
+        const maxDistance = Math.sqrt(
+            Math.pow(window.innerWidth / 2, 2) + 
+            Math.pow(window.innerHeight / 2, 2)
+        );
+        const glowIntensity = 1 - Math.min(distance / maxDistance, 1);
+        
+        text.style.textShadow = `
+            0 0 10px rgba(0,255,255,${glowIntensity * 0.5}),
+            0 0 20px rgba(0,255,255,${glowIntensity * 0.4}),
+            0 0 30px rgba(0,255,255,${glowIntensity * 0.3}),
+            0 0 40px rgba(0,255,255,${glowIntensity * 0.2})
+        `;
+        
+        text.style.transform = `rotateX(${-currentAngleX}deg) rotateY(${currentAngleY}deg)`;
+    });
+
+    text.addEventListener('click', () => {
+        const rect = text.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Play click sound
+        const clickSound = document.getElementById('clickSound');
+        clickSound.currentTime = 0; // Reset sound to start
+        clickSound.play();
+
+        // Create expanding circle at text center
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute('cx', centerX);
+        circle.setAttribute('cy', centerY);
+        circle.setAttribute('r', '0');
+        circle.classList.add('click-circle');
+
+        expandingCircles.appendChild(circle);
+
+        const animation = circle.animate([
+            { r: 0, opacity: 0.8, strokeWidth: 2 },
+            { r: 50, opacity: 0, strokeWidth: 0.5 }
+        ], {
+            duration: 500,
+            easing: 'ease-out'
+        });
+
+        animation.onfinish = () => {
+            circle.remove();
+        };
+
+        // Original click animation
+        text.classList.add('clicked');
+        setTimeout(() => {
+            text.classList.remove('clicked');
+        }, 500);
+    });
+
+
+    function createExpandingCircle() {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute('cx', '50%');
+        circle.setAttribute('cy', '50%');
+        circle.setAttribute('r', '0');
+        circle.classList.add('expanding-circle');
+        
+        expandingCircles.appendChild(circle);
+        
+        const animation = circle.animate([
+            { r: 0, opacity: 1, strokeWidth: 2 },
+            { r: 300, opacity: 0, strokeWidth: 0.5 }
+        ], {
+            duration: 2000,
+            easing: 'ease-out'
+        });
+        
+        animation.onfinish = () => {
+            circle.remove();
+        };
+    }
+
+    document.body.addEventListener('click', (e) => {
+        // Play click sound
+        const clickSound = document.getElementById('clickSound');
+        clickSound.currentTime = 0;
+        clickSound.play();
+
+        // Create circle at click position
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute('cx', e.clientX);
+        circle.setAttribute('cy', e.clientY);
+        circle.setAttribute('r', '0');
+        circle.classList.add('click-circle');
+
+        expandingCircles.appendChild(circle);
+
+        const animation = circle.animate([
+            { r: 0, opacity: 0.8, strokeWidth: 2 },
+            { r: 50, opacity: 0, strokeWidth: 0.5 }
+        ], {
+            duration: 500,
+            easing: 'ease-out'
+        });
+
+        animation.onfinish = () => {
+            circle.remove();
+        };
+    });
+});
+</script>
+</body>
+</html>
